@@ -213,7 +213,7 @@ True :: Bool
 >>> :t 'a'
 'a' :: Char
 >>> :t 42
-42 :: Num p => p
+42 :: Num a => a
 
 A pair of boolean and char:
 >>> :t (True, 'x')
@@ -429,6 +429,7 @@ task is to specify the type of this function.
 49
 -}
 
+squareSum :: Int -> Int -> Int
 squareSum x y = (x + y) * (x + y)
 
 
@@ -449,7 +450,7 @@ Implement the function that takes an integer value and returns the next 'Int'.
   function body with the proper implementation.
 -}
 next :: Int -> Int
-next x = error "next: not implemented!"
+next x = x + 1
 
 {- |
 After you've implemented the function (or even during the implementation), you
@@ -489,8 +490,8 @@ Implement a function that returns the last digit of a given number.
   results. Or you can try to guess the function name, search for it and check
   whether it works for you!
 -}
--- DON'T FORGET TO SPECIFY THE TYPE IN HERE
-lastDigit n = error "lastDigit: Not implemented!"
+lastDigit :: Int -> Int
+lastDigit n = n `mod` 10
 
 
 {- |
@@ -520,7 +521,7 @@ branches because it is an expression and it must always return some value.
   satisfying the check will be returned and, therefore, evaluated.
 -}
 closestToZero :: Int -> Int -> Int
-closestToZero x y = error "closestToZero: not implemented!"
+closestToZero x y = if abs x < abs y then x else y
 
 
 {- |
@@ -554,7 +555,11 @@ value after "=" where the condition is true.
 Casual reminder about adding top-level type signatures for all functions :)
 -}
 
-mid x y z = error "mid: not implemented!"
+mid :: Int -> Int -> Int -> Int
+mid x y z
+  | x > y && x < z || x < y && x > z = x
+  | y > x && y < z || y < x && y > z = y
+  | otherwise = z
 
 {- |
 =⚔️= Task 8
@@ -568,7 +573,10 @@ True
 >>> isVowel 'x'
 False
 -}
-isVowel c = error "isVowel: not implemented!"
+isVowel :: Char -> Bool
+isVowel c 
+  | c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' = True
+  | otherwise = False
 
 
 {- |
@@ -632,7 +640,11 @@ Try to introduce variables in this task (either with let-in or where) to avoid
 specifying complex expressions.
 -}
 
-sumLast2 n = error "sumLast2: Not implemented!"
+sumLast2 :: Int -> Int
+sumLast2 n =
+  let dig1 = mod n 10
+      dig2 = mod (div n 10) 10
+  in dig1 + dig2
 
 
 {- |
@@ -653,7 +665,11 @@ You need to use recursion in this task. Feel free to return to it later, if you
 aren't ready for this boss yet!
 -}
 
-firstDigit n = error "firstDigit: Not implemented!"
+firstDigit :: Int -> Int
+firstDigit n = 
+  if n < 10
+    then n
+    else firstDigit (div n 10)
 
 
 {-
