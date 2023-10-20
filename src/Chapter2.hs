@@ -140,7 +140,7 @@ List of booleans:
 
 String is a list of characters:
 >>> :t "some string"
-"some string" :: [Char]
+"some string" :: String
 
 Empty list:
 >>> :t []
@@ -189,7 +189,7 @@ to guess first, what you will see.
 [10,2,3,1,5]
 
 >>> [] ++ [1, 4]  -- [] is an empty list
-[1, 4]
+[1,4]
 
 >>> 3 : [1, 2]
 [3,1,2]
