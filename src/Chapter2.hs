@@ -625,8 +625,8 @@ Implement a function that duplicates each element of the list
 
 -}
 duplicate :: [a] -> [a]
-duplicate = error "duplicate: Not implemented!"
-
+duplicate [] = []
+duplicate (x:xs) = x : x : duplicate xs
 
 {- |
 =⚔️= Task 7
@@ -640,7 +640,10 @@ Write a function that takes elements of a list only in even positions.
 >>> takeEven [2, 1, 3, 5, 4]
 [2,3,4]
 -}
-takeEven = error "takeEven: Not implemented!"
+takeEven :: [a] -> [a]
+takeEven [] = []          -- Base case for an empty list
+takeEven [x] = [x]         -- Base case for a list with a single element
+takeEven (x:_:xs) = x : takeEven xs -- Take the first element and skip the second
 
 {- |
 =🛡= Higher-order functions
@@ -747,7 +750,8 @@ value of the element itself
 🕯 HINT: Use combination of 'map' and 'replicate'
 -}
 smartReplicate :: [Int] -> [Int]
-smartReplicate l = error "smartReplicate: Not implemented!"
+smartReplicate [] = []
+smartReplicate (x:xs) = replicate x x ++ smartReplicate xs
 
 {- |
 =⚔️= Task 9
@@ -760,8 +764,9 @@ the list with only those lists that contain a passed element.
 
 🕯 HINT: Use the 'elem' function to check whether an element belongs to a list
 -}
-contains = error "contains: Not implemented!"
-
+contains :: Int -> [[Int]] -> [[Int]]
+contains _ [] = []
+contains x (y:ys) = if elem x y then y : contains x ys else contains x ys
 
 {- |
 =🛡= Eta-reduction
@@ -800,13 +805,15 @@ Let's now try to eta-reduce some of the functions and ensure that we
 mastered the skill of eta-reducing.
 -}
 divideTenBy :: Int -> Int
-divideTenBy x = div 10 x
+divideTenBy = div 10
 
--- TODO: type ;)
-listElementsLessThan x l = filter (< x) l
+listElementsLessThan :: Int -> [Int] -> [Int]
+listElementsLessThan x = filter (< x)
 
 -- Can you eta-reduce this one???
-pairMul xs ys = zipWith (*) xs ys
+-- pairMul xs ys = zipWith (*) xs ys
+pairMul :: [Int] -> [Int] -> [Int]
+pairMul = zipWith (*)
 
 {- |
 =🛡= Lazy evaluation
@@ -861,7 +868,10 @@ list.
 
 🕯 HINT: Use the 'cycle' function
 -}
-rotate = error "rotate: Not implemented!"
+rotate :: Int -> [a] -> [a]
+rotate n xs
+    | n < 0     = []  -- Return an empty list for negative rotation coefficient
+    | otherwise = take (length xs) $ drop n $ cycle xs
 
 {- |
 =💣= Task 12*
@@ -877,8 +887,9 @@ and reverses it.
   function, but in this task, you need to implement it manually. No
   cheating!
 -}
-rewind = error "rewind: Not Implemented!"
-
+rewind :: [a] -> [a]
+rewind [] = []
+rewind (x:xs) = rewind xs ++ [x]
 
 {-
 You did it! Now it is time to open pull request with your changes
